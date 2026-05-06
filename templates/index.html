@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PMPC Secure Messaging</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f6f8;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 8px;
+            width: 260px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .box {
+            margin: 20px auto;
+            padding: 15px;
+            width: 60%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        ul {
+            text-align: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>PMPC Secure Messaging System</h1>
+
+<div class="box">
+    <h3>Encryption Flow</h3>
+    <p>Plaintext to PMPC Cipher to AES GCM to Secure Ciphertext</p>
+</div>
+
+<form method="POST">
+    <input type="text" name="message" placeholder="Enter message" required>
+    <br>
+    <input type="text" name="key" placeholder="Enter key" required>
+    <br>
+    <button type="submit">Encrypt</button>
+</form>
+
+<form action="/decrypt" method="POST">
+    <input type="text" name="key" placeholder="Enter key for decryption" required>
+    <br>
+    <button type="submit">Decrypt</button>
+</form>
+
+{% if result %}
+<div class="box">
+    <h3 class="{{ status }}">{{ result }}</h3>
+</div>
+{% endif %}
+
+{% if pmpc %}
+<div class="box">
+    <h3>PMPC Output</h3>
+    <p>{{ pmpc }}</p>
+</div>
+{% endif %}
+
+{% if cipher %}
+<div class="box">
+    <h3>AES Ciphertext</h3>
+    <p>{{ cipher }}</p>
+</div>
+{% endif %}
+
+<div class="box">
+    <h3>File Encryption</h3>
+
+    <form action="/file-encrypt" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <br>
+        <input type="text" name="key" placeholder="Enter key" required>
+        <br>
+        <button type="submit">Encrypt File</button>
+    </form>
+
+    <form action="/file-decrypt" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <br>
+        <input type="text" name="key" placeholder="Enter key" required>
+        <br>
+        <button type="submit">Decrypt File</button>
+    </form>
+</div>
+
+<div class="box">
+    <h3>Security Features</h3>
+    <ul>
+        <li>Custom PMPC Cipher</li>
+        <li>AES GCM Encryption ensures confidentiality and integrity</li>
+        <li>Random nonce for each encryption</li>
+        <li>Authentication failure on wrong key</li>
+    </ul>
+</div>
+
+<div class="box">
+    <h3>Security Analysis</h3>
+    <ul>
+        <li>PMPC cipher provides basic confusion but is not secure alone</li>
+        <li>AES GCM ensures strong confidentiality and integrity</li>
+        <li>Nonce guarantees unique ciphertext for same plaintext</li>
+        <li>Authentication tag prevents tampering and wrong key attacks</li>
+        <li>SHA 256 key derivation strengthens weak user passwords</li>
+    </ul>
+</div>
+
+</body>
+</html>
+
+
