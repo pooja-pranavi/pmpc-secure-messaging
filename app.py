@@ -15,6 +15,8 @@ def index():
     pmpc_text = ""
     cipher_text = ""
     status = ""
+    text = ""
+    key = ""
 
     if request.method == "POST":
         text = request.form["message"]
@@ -35,13 +37,18 @@ def index():
         result=result,
         pmpc=pmpc_text,
         cipher=cipher_text,
-        status=status
+        status=status,
+        message=text,
+        key=key
     )
 
 
 @app.route("/decrypt", methods=["POST"])
 def decrypt():
     key = request.form["key"]
+    text = ""
+    pmpc_text = ""
+    cipher_text = ""
 
     encrypted_data = storage.get("ciphertext")
 
@@ -52,14 +59,18 @@ def decrypt():
         return render_template(
             "index.html",
             result="Decrypted Message: " + original,
-            status="success"
+            status="success",
+            message=original,
+            key=key
         )
 
     except Exception:
         return render_template(
             "index.html",
             result="Decryption Failed (Wrong key or tampered data)",
-            status="error"
+            status="error",
+            message="",
+            key=key
         )
 
 

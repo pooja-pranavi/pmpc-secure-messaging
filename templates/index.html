@@ -11,10 +11,6 @@
             padding-top: 40px;
         }
 
-        h1 {
-            color: #333;
-        }
-
         input, button {
             padding: 10px;
             margin: 8px;
@@ -29,32 +25,20 @@
             border: none;
         }
 
-        button:hover {
-            background-color: #0056b3;
-        }
-
         .box {
             margin: 20px auto;
             padding: 15px;
             width: 60%;
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         .success {
             color: green;
-            font-weight: bold;
         }
 
         .error {
             color: red;
-            font-weight: bold;
-        }
-
-        ul {
-            text-align: left;
-            display: inline-block;
         }
     </style>
 </head>
@@ -69,15 +53,15 @@
 </div>
 
 <form method="POST">
-    <input type="text" name="message" placeholder="Enter message" required>
+    <input type="text" name="message" value="{{ message }}" placeholder="Enter message" required>
     <br>
-    <input type="text" name="key" placeholder="Enter key" required>
+    <input type="text" name="key" value="{{ key }}" placeholder="Enter key" required>
     <br>
     <button type="submit">Encrypt</button>
 </form>
 
 <form action="/decrypt" method="POST">
-    <input type="text" name="key" placeholder="Enter key for decryption" required>
+    <input type="text" name="key" value="{{ key }}" placeholder="Enter key for decryption" required>
     <br>
     <button type="submit">Decrypt</button>
 </form>
@@ -145,5 +129,3 @@
 
 </body>
 </html>
-
-
